@@ -10,6 +10,8 @@ import time
 
 
 if __name__ == "__main__":
+    np.float = np.float64
+    np.int = np.int_
     parser = ArgumentParser(description='"Test Demo of MDTVSFA')
     parser.add_argument('--model_path', default='models/MDTVSFA.pt', type=str,
                         help='model path (default: models/MDTVSFA.pt)')
@@ -22,7 +24,7 @@ if __name__ == "__main__":
     parser.add_argument('--video_height', type=int, default=None,
                         help='video height')
 
-    parser.add_argument('--frame_batch_size', type=int, default=32,
+    parser.add_argument('--frame_batch_size', type=int, default=4,
                         help='frame batch size for feature extraction (default: 32)')
     args = parser.parse_args()
 
