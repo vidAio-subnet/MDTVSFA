@@ -17,8 +17,6 @@ class VQAModel(nn.Module):
         self.regression = nn.Linear(hidden_size, 1)
         self.bound = nn.Sigmoid()
         self.nlm = nn.Sequential(nn.Linear(1, 1), nn.Sigmoid(), nn.Linear(1, 1))  # 4 parameters
-        # self.nlm = nn.Sequential(nn.Sequential(nn.Linear(1, 1), nn.Sigmoid(), nn.Linear(1, 1, bias=False)),
-        #                          nn.Linear(1, 1))  # 5 parameters
         self.lm = nn.Sequential(OrderedDict([(dataset, nn.Linear(1, 1)) for dataset in mapping_datasets]))
 
         torch.nn.init.constant_(self.nlm[0].weight, 2*np.sqrt(3))
@@ -30,31 +28,6 @@ class VQAModel(nn.Module):
         for d, dataset in enumerate(mapping_datasets):
             torch.nn.init.constant_(self.lm._modules[dataset].weight, scale[dataset])
             torch.nn.init.constant_(self.lm._modules[dataset].bias, m[dataset])
-
-
-        # torch.nn.init.constant_(self.nlm[0][0].weight, 2*np.sqrt(3))
-        # torch.nn.init.constant_(self.nlm[0][0].bias, -np.sqrt(3))
-        # torch.nn.init.constant_(self.nlm[0][2].weight, 0)
-
-        # torch.nn.init.constant_(self.nlm[1].weight, 1)
-        # torch.nn.init.constant_(self.nlm[1].bias, 0)
-        # for d, dataset in enumerate(mapping_datasets):
-        #     torch.nn.init.constant_(self.lm._modules[dataset].weight, scale[dataset])
-        #     torch.nn.init.constant_(self.lm._modules[dataset].bias, m[dataset])
-            
-        # for d, dataset in enumerate(mapping_datasets):
-        #     if d == 0:
-        #         dataset0 = dataset
-        #         torch.nn.init.constant_(self.nlm[1].weight, scale[dataset0])
-        #         torch.nn.init.constant_(self.nlm[1].bias, m[dataset0])
-        #         torch.nn.init.constant_(self.lm._modules[dataset0].weight, 1)
-        #         torch.nn.init.constant_(self.lm._modules[dataset0].bias, 0)
-        #         for p in self.lm._modules[dataset0].parameters():
-        #             p.requires_grad = False
-        #     else:
-        #         torch.nn.init.constant_(self.lm._modules[dataset].weight, scale[dataset] / scale[dataset0])
-        #         torch.nn.init.constant_(self.lm._modules[dataset].bias,
-        #                                 m[dataset] - m[dataset0] * scale[dataset] / scale[dataset0])
 
         if simple_linear_scale:
             for p in self.lm.parameters():

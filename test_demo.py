@@ -8,7 +8,6 @@ from VQAmodel import VQAModel
 from argparse import ArgumentParser
 import time
 
-
 if __name__ == "__main__":
     np.float = np.float64
     np.int = np.int_
