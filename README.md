@@ -10,10 +10,9 @@ MDTVSFA code for the following paper:
 ## How to?
 ### Install Requirements
 ```bash
-conda create -n reproducibleresearch pip python=3.6
-source activate reproducibleresearch
-pip install -r requirements.txt -i https://pypi.tuna.tsinghua.edu.cn/simple
-# source deactive
+python3.12 -m venv venv
+source venv/bin/activate
+pip install -r requirements.txt
 ```
 Note: Make sure that the CUDA version is consistent. If you have any installation problems, please find the details of error information in `*.log` file.
 
