@@ -24,7 +24,7 @@ if __name__ == "__main__":
     parser.add_argument('--video_height', type=int, default=None,
                         help='video height')
 
-    parser.add_argument('--frame_batch_size', type=int, default=4,
+    parser.add_argument('--frame_batch_size', type=int, default=1,
                         help='frame batch size for feature extraction (default: 32)')
     args = parser.parse_args()
 
